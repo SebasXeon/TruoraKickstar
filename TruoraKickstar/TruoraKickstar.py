@@ -4,12 +4,16 @@ import reflex as rx
 
 from rxconfig import config
 
+from TruoraKickstar.pages.index import index
+from TruoraKickstar.pages.new_doc import new_doc
+
+
 
 class State(rx.State):
     """The app state."""
 
 
-def index() -> rx.Component:
+""" def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
         rx.color_mode.button(position="top-right"),
@@ -29,8 +33,18 @@ def index() -> rx.Component:
             justify="center",
             min_height="85vh",
         ),
+    ) """
+
+def custom():
+    return rx.text("Custom Route")
+
+
+
+app = rx.App(
+    theme=rx.theme(
+        accent_color="purple",
+        radius="large"
     )
-
-
-app = rx.App()
+)
 app.add_page(index)
+app.add_page(new_doc, route="/create-doc")
