@@ -3,6 +3,7 @@ from TruoraKickstar.state import State
 from TruoraKickstar.components.layout.sidebar import SideBar
 from TruoraKickstar.components.layout.page_title import PageTitle
 from TruoraKickstar.components.form_doc import FormDoc
+from TruoraKickstar.components.doc_viewer import DocViewer
 #from TruoraKickstar.components.doc_list_item import DocListItem
 
 def new_doc() -> rx.Component:
@@ -38,14 +39,17 @@ def new_doc() -> rx.Component:
                                 flex_direction="column",
                             )
                         ),
-                        rx.text(State.generated_docs)
+                        DocViewer(State.generated_docs)
                     ),
                     bg=rx.color("gray", 6),
                     padding="1rem 1rem",
-                    border_radius=".8rem"
+                    border_radius=".8rem",
+                    max_height="100%",
+                    overflow="auto"
                 ),
                 grid_template_columns="1fr 2fr",
                 gap="1rem",
+                overflow="auto"
             ),
             gap="1rem",
             flex_direction="column",
