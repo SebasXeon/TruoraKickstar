@@ -1,6 +1,6 @@
 import reflex as rx
 
-from TruoraKickstar.state import State
+from TruoraKickstar.states.form_state import FormState
 
 def FormDoc() -> rx.Component:
     return rx.flex(
@@ -13,8 +13,8 @@ def FormDoc() -> rx.Component:
                     rx.input(
                         name="client",  
                         placeholder="Nombre del cliente",
-                        value=State.client,
-                        on_change=State.set_client,
+                        value=FormState.client,
+                        on_change=FormState.set_client,
                         required=True,
                         # opcional: value/on_change si quieres enlazar con State
                     ),
@@ -24,9 +24,9 @@ def FormDoc() -> rx.Component:
                 rx.form.field(
                     rx.form.label("Producto"),
                     rx.select(
-                        ["Verificación de antecedentes", "Validación de identidad digital", "Firma electrónica", "Customer Engagement"],
-                        value=State.product,
-                        on_change=State.set_product,
+                        ["Verificación de antecedentes", "Validación de identidad digital", "Firma electrónica"],
+                        value=FormState.product,
+                        on_change=FormState.set_product,
                     ),
                     width="100%"
                 ),
@@ -35,8 +35,8 @@ def FormDoc() -> rx.Component:
                     rx.form.label("Lenguaje implementación"),
                     rx.select(
                         ["JavaScript", "Python", "Java", "PHP", "Ruby", "Dart", "GoLang"],
-                        value=State.lang,
-                        on_change=State.set_lang,
+                        value=FormState.lang,
+                        on_change=FormState.set_lang,
                     ),
                     width="100%"
                 ),
@@ -47,8 +47,8 @@ def FormDoc() -> rx.Component:
                         name="framework",  
                         placeholder="Framework usado por el cliente",
                         required=False,
-                        value=State.framework,
-                        on_change=State.set_framework,
+                        value=FormState.framework,
+                        on_change=FormState.set_framework,
                     ),
                     width="100%"
                 ),
@@ -59,8 +59,8 @@ def FormDoc() -> rx.Component:
                         name="notes",
                         placeholder="Notas y/o especicifaciones para la generación de docs.",
                         min_height="120px",
-                        value=State.notes,
-                        on_change=State.set_notes,
+                        value=FormState.notes,
+                        on_change=FormState.set_notes,
                     ),
                     width="100%"
                 ),
@@ -70,13 +70,13 @@ def FormDoc() -> rx.Component:
                     rx.button(
                         "Generar",
                         type_="submit",
-                        loading=State.procesando,
+                        loading=FormState.processing,
                     ),
                     width="100%",
                     justify="end"
                 )
             ),
-            on_submit=State.generate_documentation,
+            on_submit=FormState.generate_documentation,
             reset_on_submit=False,
             width="100%",
             spacing="1rem",

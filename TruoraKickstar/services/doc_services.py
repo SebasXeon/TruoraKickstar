@@ -1,13 +1,9 @@
-import reflex as rx
-from TruoraKickstar.models import DocRequest
+from TruoraKickstar.models.request_model import DocRequest
 import httpx
 
 async def gen_docs(doc_request: DocRequest):
     data = {
-        "client": doc_request.client,
-        "product": doc_request.product,
-        "language": doc_request.lang,
-        "framework": doc_request.framework,
+        "request_id": doc_request.id
     }
 
     async with httpx.AsyncClient() as client:

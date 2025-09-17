@@ -1,40 +1,39 @@
-# generador_doc_ai/state.py
-
 import reflex as rx
 
-from TruoraKickstar.models import DocRequest
-from TruoraKickstar.services.doc_generator import gen_docs
+from TruoraKickstar.models.request_model import DocRequest
+from TruoraKickstar.services.request_services import add_requests
+from TruoraKickstar.services.doc_services import gen_docs
 
-class State(rx.State):
-    # Vars del formulario
+class FormState(rx.State):
     client: str = ""
     product: str = ""
     lang: str = ""
     framework: str = ""
     notes: str = ""
     generated_docs: str = ""
-    procesando: bool = False
+    processing: bool = False
 
     @rx.event
     async def generate_documentation(self):
         print(self.client, self.product, self.lang, self.framework, self.notes)
-        self.procesando = True
+        self.processing = True
         
         doc_request = DocRequest(
-            client=self.client,
+            client_name=self.client,
             product=self.product,
             lang=self.lang,
             framework=self.framework,
             notes=self.notes,
-            state="pending"
+            state="Pending"
         )
         yield
+
+        add_requests(doc_request)
         
         generated_docs = await gen_docs(doc_request)
-        print(generated_docs)
         
         self.generated_docs = generated_docs.get("guide", "Erorr al procesar.")
-        self.procesando = False
+        self.processing = False
 
 
     @rx.event
@@ -56,9 +55,3 @@ class State(rx.State):
     @rx.event
     def set_notes(self, nuevo: str):
         self.notes = nuevo
-
-    @rx.event
-    def cargar_docs(self):
-        """Cargar documentos existentes desde la base de datos."""
-        # implementar...
-        pass
