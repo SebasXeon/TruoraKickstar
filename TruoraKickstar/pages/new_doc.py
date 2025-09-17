@@ -18,7 +18,7 @@ def new_doc() -> rx.Component:
                         rx.cond(
                             FormState.generated_docs == "",
                             rx.cond(
-                                FormState.procesando,
+                                FormState.processing,
                                 rx.center(
                                     rx.spinner(size="3"),
                                     rx.text("Generando documentación"),

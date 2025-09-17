@@ -97,8 +97,8 @@ def SideBar() -> rx.Component:
                     icon="home",
                 ),
                 sidebar_item(
-                    text="Crear docs",
-                    url="/create-doc",
+                    text="Nuevo Doc",
+                    url="/new_doc",
                     icon="clipboard-plus",
                 ),
             )

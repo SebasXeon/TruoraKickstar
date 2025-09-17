@@ -19,7 +19,11 @@ def login():
                 width="100%",
             ),
             rx.flex(
-                rx.button("Iniciar sesión", on_click=AuthState.login),
+                rx.button(
+                    "Iniciar sesión",
+                    on_click=AuthState.login,
+                    loading=AuthState.processing,
+                ),
                 align_self="end",
             ),
             rx.text(AuthState.message, color="red"),

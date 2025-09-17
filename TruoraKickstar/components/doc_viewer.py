@@ -1,7 +1,5 @@
 import reflex as rx
 
-from TruoraKickstar.state import State
-
 def DocViewer(documentation) -> rx.Component:
     return rx.flex(
         rx.markdown(

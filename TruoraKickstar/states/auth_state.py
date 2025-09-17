@@ -5,21 +5,29 @@ class AuthState(rx.State):
     email: str = ""
     password: str = ""
     message: str = ""
+    processing: bool = False
     logged_in: bool = False
 
     @rx.event
     def login(self):
+        self.processing = True
+        yield
         try:
-            result = supabase.auth.sign_in_with_password(
+            session = supabase.auth.sign_in_with_password(
                 {"email": self.email, "password": self.password}
             )
-            if result.user:
+            if session.user:
                 self.logged_in = True
-                self.message = f"Bienvenido {result.user.email}"
+                supabase.auth.set_session(session.session.access_token, session.session.refresh_token)
+                supabase.postgrest.auth(session.session.access_token)
+                self.message = f"Bienvenido {session.user.email}"
             else:
+                print(session)
                 self.message = "Login fallido."
         except Exception as e:
+            print(e)
             self.message = f"Error: {str(e)}"
+        self.processing = False
 
     @rx.event
     def set_email(self, nuevo: str):
