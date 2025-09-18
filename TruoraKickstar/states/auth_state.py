@@ -1,5 +1,6 @@
 import reflex as rx
-from TruoraKickstar.supabase_client import supabase
+from TruoraKickstar.services.auth_services import auth_user
+
 
 class AuthState(rx.State):
     email: str = ""
@@ -12,21 +13,11 @@ class AuthState(rx.State):
     def login(self):
         self.processing = True
         yield
-        try:
-            session = supabase.auth.sign_in_with_password(
-                {"email": self.email, "password": self.password}
-            )
-            if session.user:
-                self.logged_in = True
-                supabase.auth.set_session(session.session.access_token, session.session.refresh_token)
-                supabase.postgrest.auth(session.session.access_token)
-                self.message = f"Bienvenido {session.user.email}"
-            else:
-                print(session)
-                self.message = "Login fallido."
-        except Exception as e:
-            print(e)
-            self.message = f"Error: {str(e)}"
+        logged_in = auth_user(self.email, self.password)
+        self.logged_in = logged_in
+        if self.logged_in:
+            from TruoraKickstar.states.index_state import IndexState
+            yield IndexState.list_requests()
         self.processing = False
 
     @rx.event
