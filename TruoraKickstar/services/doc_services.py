@@ -6,7 +6,7 @@ from fpdf import FPDF
 
 from dotenv import load_dotenv
 load_dotenv()
-N8N_WEEBHOOK = os.getenv("SUPAN8N_WEEBHOOKBASE_KEY")
+N8N_WEEBHOOK = os.getenv("N8N_WEEBHOOK")
 
 async def gen_docs(doc_request: DocRequest):
     data = {
