@@ -4,6 +4,10 @@ import os
 import markdown
 from fpdf import FPDF
 
+from dotenv import load_dotenv
+load_dotenv()
+N8N_WEEBHOOK = os.getenv("SUPAN8N_WEEBHOOKBASE_KEY")
+
 async def gen_docs(doc_request: DocRequest):
     data = {
         "request_id": doc_request.id
@@ -11,7 +15,7 @@ async def gen_docs(doc_request: DocRequest):
 
     async with httpx.AsyncClient() as client:
         resp = await client.post(
-            "https://sebasxeon.app.n8n.cloud/webhook-test/dfd2c398-9217-4f67-99e8-f9ebebf95d3e",
+            N8N_WEEBHOOK,
             json=data,
             timeout=60
         )
