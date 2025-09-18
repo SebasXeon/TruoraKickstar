@@ -6,7 +6,7 @@ from fpdf import FPDF
 
 from dotenv import load_dotenv
 load_dotenv()
-N8N_WEEBHOOK = os.getenv("N8N_WEEBHOOK")
+N8N_WEBHOOK = os.getenv("N8N_WEBHOOK")
 
 async def gen_docs(doc_request: DocRequest):
     data = {
@@ -15,7 +15,7 @@ async def gen_docs(doc_request: DocRequest):
 
     async with httpx.AsyncClient() as client:
         resp = await client.post(
-            N8N_WEEBHOOK,
+            N8N_WEBHOOK,
             json=data,
             timeout=60
         )
